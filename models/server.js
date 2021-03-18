@@ -12,6 +12,7 @@ class Server {
 
         //nombre de las rutas
         this.usuariosPath = '/api/usuarios';
+        this.authPath = '/api/auth';
 
         //concexion a la base de datos de MongoDB
         this.conectarDB();
@@ -37,7 +38,9 @@ class Server {
     }
 
     routes() { //rutas alternativas de la app con sus metodos, las configuramos como si fuese un middleware, donde indicamos el nombre que manejaremos en la ruta y de donde la requerimos
-        this.app.use(this.usuariosPath, require('../routes/usuarios'));
+
+        this.app.use(this.authPath, require('../routes/auth')); //login
+        this.app.use(this.usuariosPath, require('../routes/usuarios')); //usuarios
     }
 
     listen() { //express el localhost se llama de aqui

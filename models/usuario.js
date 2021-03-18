@@ -35,7 +35,8 @@ const usuarioSchema = Schema({
 
 //de esta manera controlamos la seguridad de nuestros usuarios con respecto a sus contraseñas, ya que al creal la siguiente función lo que mostraremos son solo los datos que necesitamos que se vean, capturando los datos que queremosocultar
 usuarioSchema.methods.toJSON = function() { //llamamos del json la funcion
-    const { __v, password, ...usuario } = this.toObject(); //con el this desestructuramos el objeto con los datos que no queremos que se vea
+    const { __v, password, _id, ...usuario } = this.toObject(); //con el this desestructuramos el objeto con los datos que no queremos que se vea
+    usuario.uid = _id;
     return usuario;
 }
 
