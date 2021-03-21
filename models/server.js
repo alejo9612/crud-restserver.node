@@ -45,7 +45,7 @@ class Server {
 
     listen() { //express el localhost se llama de aqui
         this.app.listen(this.port, () => {
-            console.log('Escuchando a través del pureto', this.port);
+            console.log('Escuchando a través del puerto', this.port);
         });
     }
 }

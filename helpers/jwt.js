@@ -9,9 +9,9 @@ const generarJWT = (uid = '') => {
 
         const payload = { uid };
 
-        //llamamos elmetodo sing que nos indica lo que vamos necesitando poner en los 2 primeros campos, luego abrimos el callback luego de las llaves
+        //llamamos el metodo sing que nos indica lo que vamos necesitando poner en los 2 primeros campos, luego abrimos el callback luego de las llaves
         jwt.sign(payload, process.env.SECRETORPRIVATEKEY, {
-            expiresIn: '4h'
+            expiresIn: '24h'
         }, (err, token) => { //declaramos el callback
 
             if (err) { //indicamos el resultado de cada uno de los atributos del callback
