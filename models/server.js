@@ -11,8 +11,13 @@ class Server {
         this.port = process.env.PORT;
 
         //nombre de las rutas
-        this.usuariosPath = '/api/usuarios';
-        this.authPath = '/api/auth';
+        this.Paths = {
+            auth: '/api/auth',
+            buscar: '/api/buscar',
+            categoria: '/api/categorias',
+            producto: '/api/productos',
+            usuarios: '/api/usuarios'
+        }
 
         //concexion a la base de datos de MongoDB
         this.conectarDB();
@@ -39,8 +44,11 @@ class Server {
 
     routes() { //rutas alternativas de la app con sus metodos, las configuramos como si fuese un middleware, donde indicamos el nombre que manejaremos en la ruta y de donde la requerimos
 
-        this.app.use(this.authPath, require('../routes/auth')); //login
-        this.app.use(this.usuariosPath, require('../routes/usuarios')); //usuarios
+        this.app.use(this.Paths.auth, require('../routes/auth')); //login
+        this.app.use(this.Paths.buscar, require('../routes/buscar')); //buscar
+        this.app.use(this.Paths.categoria, require('../routes/categorias')); //categorias
+        this.app.use(this.Paths.producto, require('../routes/productos')); //productos
+        this.app.use(this.Paths.usuarios, require('../routes/usuarios')); //usuarios
     }
 
     listen() { //express el localhost se llama de aqui
