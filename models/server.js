@@ -2,6 +2,7 @@
 const express = require('express');
 const cors = require('cors');
 const { dbConnection } = require('../db/config'); //destructuramomos el contenido y tomamos loq ue necesitamos de la funcio para la conexión con la base de datos
+const fileUpload = require('express-fileupload');
 
 //Inicialización de la clase
 class Server {
@@ -16,7 +17,8 @@ class Server {
             buscar: '/api/buscar',
             categoria: '/api/categorias',
             producto: '/api/productos',
-            usuarios: '/api/usuarios'
+            usuarios: '/api/usuarios',
+            uploads: '/api/uploads'
         }
 
         //concexion a la base de datos de MongoDB
@@ -40,6 +42,12 @@ class Server {
         this.app.use(express.json()); // me trae la información que enviamos en formato json
         //Directorio publico
         this.app.use(express.static('public')); //ruta para la carpeta publica al inicialziar la app
+        //Carga de archivos
+        this.app.use(fileUpload({ //se pueden cargar archivos desde la petición rest
+            useTempFiles: true,
+            tempFileDir: '/tmp/',
+            createParentPath: true
+        }));
     }
 
     routes() { //rutas alternativas de la app con sus metodos, las configuramos como si fuese un middleware, donde indicamos el nombre que manejaremos en la ruta y de donde la requerimos
@@ -49,6 +57,7 @@ class Server {
         this.app.use(this.Paths.categoria, require('../routes/categorias')); //categorias
         this.app.use(this.Paths.producto, require('../routes/productos')); //productos
         this.app.use(this.Paths.usuarios, require('../routes/usuarios')); //usuarios
+        this.app.use(this.Paths.uploads, require('../routes/upload'));
     }
 
     listen() { //express el localhost se llama de aqui
